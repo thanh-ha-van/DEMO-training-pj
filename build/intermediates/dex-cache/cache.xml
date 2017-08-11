@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/home/local/INI/thanh.ha/Desktop/OTT/MyAndroidTV/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="59e729aa9da17ec49aeb31ed5e376a0f92963377">
+        <dex dex="/home/local/INI/thanh.ha/Desktop/OTT/MyAndroidTV/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_fd85296f8a2c396fd11c8e1af5b4b1958398c349/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/local/INI/thanh.ha/Desktop/OTT/MyAndroidTV/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="/home/local/INI/thanh.ha/Desktop/OTT/MyAndroidTV/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_1dcdd8a1d4ec92734a0e6c9b2cfeed3960b6b05e/classes.dex" />
+    </item>
+
+</items>
