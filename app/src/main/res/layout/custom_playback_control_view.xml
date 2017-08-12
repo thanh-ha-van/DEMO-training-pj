@@ -1,62 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/controller_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="bottom"
-    android:layoutDirection="ltr"
-    android:id="@+id/controller_layout"
     android:background="@color/black_transparent"
+    android:layoutDirection="ltr"
     android:orientation="vertical">
+
     <TextView
+        android:id="@+id/video_title_controller_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
-        android:id="@+id/video_title_controller_bar"
         android:padding="5dp"
-        android:layout_margin="5dp"
-        android:textColor="@color/white"/>
+        android:text=""
+        android:textColor="@color/white" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:padding="10dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="10dp">
 
-        <TextView android:id="@id/exo_position"
+        <TextView
+            android:id="@id/exo_position"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textStyle="bold"
+            android:includeFontPadding="false"
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
-            android:includeFontPadding="false"
-            android:textColor="#ffffff"/>
+            android:textColor="#ffffff"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
-        <com.google.android.exoplayer2.ui.DefaultTimeBar
+        <ha.thanh.myandroidtv.CustomTimeBar
             android:id="@id/exo_progress"
             android:layout_width="0dp"
-            app:bar_height="20dp"
-            app:buffered_color="#888888"
-            app:ad_marker_color="#00ff00"
-            app:touch_target_height="0dp"
-            app:played_color="#eeeeee"
+            android:layout_height="16dp"
             android:layout_weight="1"
             android:background="@drawable/plate"
-            android:layout_height="20dp"/>
+            app:ad_marker_color="#00ff00"
+            app:bar_height="14dp"
+            app:buffered_color="#888888"
+            app:played_color="@color/white"
+            app:scrubber_color="@color/white"
+            app:scrubber_disabled_size="14dp"
+            app:scrubber_dragged_size="14dp"
+            app:scrubber_enabled_size="14dp"
+            />
 
-        <TextView android:id="@id/exo_duration"
+        <TextView
+            android:id="@id/exo_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textStyle="bold"
+            android:includeFontPadding="false"
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
-            android:includeFontPadding="false"
-            android:textColor="#ffffff"/>
+            android:textColor="#ffffff"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

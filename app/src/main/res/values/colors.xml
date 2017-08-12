@@ -15,4 +15,5 @@
     <color name="orange">#FADCA7</color>
     <color name="yellow">#EEFF41</color>
     <color name="default_background">#55000000</color>
+    <color name="total_transparent">#00ffffff</color>
 </resources>

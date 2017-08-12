@@ -18,6 +18,7 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v17.leanback.widget.ListRowPresenter;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -50,7 +51,7 @@ import com.google.android.exoplayer2.util.Util;
 /**
  * PlaybackOverlayActivity for video playback that loads PlaybackOverlayFragment
  */
-public class PlaybackOverlayActivity extends Activity implements MovieChangeListenner, Player.EventListener {
+public class PlaybackOverlayActivity extends Activity implements MovieChangeListener, Player.EventListener {
 
 
     private DataSource.Factory mediaDataSourceFactory;
@@ -63,6 +64,7 @@ public class PlaybackOverlayActivity extends Activity implements MovieChangeList
     private FragmentManager f;
     private PlaybackOverlayFragment fragment;
     private TextView tvTitle;
+    private SimpleExoPlayerView simpleExoPlayerView;
     /**
      * Called when the activity is first created.
      */
@@ -78,7 +80,6 @@ public class PlaybackOverlayActivity extends Activity implements MovieChangeList
 
         tvTitle = findViewById(R.id.video_title_controller_bar);
 
-
         shouldAutoPlay = true;
         bandwidthMeter = new DefaultBandwidthMeter();
         mediaDataSourceFactory = new DefaultDataSourceFactory(this,
@@ -87,12 +88,12 @@ public class PlaybackOverlayActivity extends Activity implements MovieChangeList
 
         f = getFragmentManager();
         fragment = (PlaybackOverlayFragment) f.findFragmentById(R.id.playback_controls_fragment);
-        fragment.setMovieChangeLisener(this);
+        fragment.setMovieChangeListener(this);
     }
 
     private void initializePlayer() {
 
-        SimpleExoPlayerView simpleExoPlayerView = findViewById(R.id.player_view);
+        simpleExoPlayerView = findViewById(R.id.player_view);
         simpleExoPlayerView.requestFocus();
         simpleExoPlayerView.hideController();
 
@@ -232,15 +233,10 @@ public class PlaybackOverlayActivity extends Activity implements MovieChangeList
         switch (keyCode)
         {
             case KeyEvent.KEYCODE_DPAD_UP: // key up
-                if (queueBarLayout.getVisibility() == LinearLayout.GONE) {
-                    queueBarLayout.setVisibility(LinearLayout.VISIBLE);
-                    queueBarLayout.requestFocus();
-                }
+                doKeyUpthing();
                 return true;
             case KeyEvent.KEYCODE_DPAD_DOWN:  // key dow
-                if (queueBarLayout.getVisibility() == LinearLayout.VISIBLE) {
-                    queueBarLayout.setVisibility(LinearLayout.GONE);
-                }
+                doKeyDownThing();
                 return true;
             case 42:  // later will be the next video button
                 fragment.nextVideo();
@@ -267,5 +263,18 @@ public class PlaybackOverlayActivity extends Activity implements MovieChangeList
             case 5: // next
             case 6: // previous
         }
+    }
+    private void doKeyUpthing() {
+        if (queueBarLayout.getVisibility() == LinearLayout.GONE) {
+            queueBarLayout.setVisibility(LinearLayout.VISIBLE);
+            queueBarLayout.requestFocus();
+        }
+        simpleExoPlayerView.hideController();
+    }
+    private void doKeyDownThing () {
+        if (queueBarLayout.getVisibility() == LinearLayout.VISIBLE) {
+            queueBarLayout.setVisibility(LinearLayout.GONE);
+        }
+        simpleExoPlayerView.showController();
     }
 }

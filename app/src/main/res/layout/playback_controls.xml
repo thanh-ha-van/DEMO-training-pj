@@ -17,25 +17,19 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
+    android:background="@color/lb_grey"
     android:layout_height="match_parent">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
 
         <com.google.android.exoplayer2.ui.SimpleExoPlayerView
             android:id="@+id/player_view"
             android:focusable="true"
             app:show_timeout="3000"
+            app:rewind_increment="10000"
+            app:fastforward_increment="10000"
             app:controller_layout_id="@layout/custom_playback_control_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         </com.google.android.exoplayer2.ui.SimpleExoPlayerView>
-
-    </RelativeLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -75,7 +69,7 @@
             android:id="@+id/playback_controls_fragment"
             android:name="ha.thanh.myandroidtv.PlaybackOverlayFragment"
             android:layout_width="match_parent"
-            android:layout_height="190dp"
+            android:layout_height="150dp"
             android:layout_gravity="bottom"/>
 
     </LinearLayout>

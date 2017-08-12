@@ -4,10 +4,8 @@ package ha.thanh.myandroidtv;
 import android.app.Activity;
 
 import android.os.Bundle;
-import android.support.v17.leanback.app.HeadersFragment;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.ClassPresenterSelector;
-import android.support.v17.leanback.widget.HeaderItem;
 import android.support.v17.leanback.widget.ListRow;
 import android.support.v17.leanback.widget.ListRowPresenter;
 import android.support.v17.leanback.widget.OnItemViewClickedListener;
@@ -27,7 +25,7 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Ro
     private static final String TAG = "PlaybackControlsFragment";
     private ArrayObjectAdapter mRowsAdapter;
     private ArrayList<Movie> mItems = new ArrayList<>();
-    public MovieChangeListenner movieChangeLisener;
+    public MovieChangeListener movieChangeLisener;
     public int currentPlaying = 0, currentSelected = 0;
     public TextView tvBarTitle;
     public TextView tvNum;
@@ -63,12 +61,12 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Ro
 
     }
 
-    private void initView() {
+    private void initChildView() {
         tvBarTitle = getActivity().findViewById(R.id.tv_bar_title);
         tvNum = getActivity().findViewById(R.id.tv_bar_num);
     }
-    public void setMovieChangeLisener (MovieChangeListenner lisener) {
-        this.movieChangeLisener = lisener;
+    public void setMovieChangeListener(MovieChangeListener listener) {
+        this.movieChangeLisener = listener;
     }
 
     private final class ItemViewClickedListener implements OnItemViewClickedListener {
@@ -87,10 +85,13 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Ro
         @Override
         public void onItemSelected(Presenter.ViewHolder itemViewHolder, Object item,
                                    RowPresenter.ViewHolder rowViewHolder, Row row) {
-            initView();
-            currentSelected = ((ListRowPresenter.ViewHolder)rowViewHolder).getGridView().getSelectedPosition() + 1;
-            tvNum.setText("" + currentSelected + "/" + mItems.size());
-            //tvBarTitle.setText(((Movie) item).getTitle());
+            initChildView();
+            if (item instanceof  Movie) {
+                Movie selected = (Movie) item;
+                currentSelected = ((ListRowPresenter.ViewHolder) rowViewHolder).getGridView().getSelectedPosition() + 1;
+                tvNum.setText("" + currentSelected + "/" + mItems.size());
+                tvBarTitle.setText(selected.getTitle());
+            }
         }
     }
     @SuppressWarnings("deprecation")
