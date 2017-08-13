@@ -41,10 +41,10 @@ public class CustomPresenter extends Presenter {
         ImageView imageView = layout.findViewById(R.id.image_movie);
         TextView textView = layout.findViewById(R.id.tv_name);
         Log.d(TAG, "onBindViewHolder");
-        if (movie!= null) {
+        if (movie != null) {
 
             Glide.with(viewHolder.view.getContext())
-                    .load(movie.getCardImageURI().toString())
+                    .load(movie.getBackgroundImageURI().toString())
                     .placeholder(R.drawable.grid_bg) // any placeholder to load at start
                     .centerCrop()
                     .error(R.drawable.grid_bg)

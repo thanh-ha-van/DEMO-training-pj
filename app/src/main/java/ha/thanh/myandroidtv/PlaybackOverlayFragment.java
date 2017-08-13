@@ -29,6 +29,7 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Ro
     public int currentPlaying = 0, currentSelected = 0;
     public TextView tvBarTitle;
     public TextView tvNum;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +66,7 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Ro
         tvBarTitle = getActivity().findViewById(R.id.tv_bar_title);
         tvNum = getActivity().findViewById(R.id.tv_bar_num);
     }
+
     public void setMovieChangeListener(MovieChangeListener listener) {
         this.movieChangeLisener = listener;
     }
@@ -74,7 +76,7 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Ro
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item,
                                   RowPresenter.ViewHolder rowViewHolder, Row row) {
 
-            currentPlaying = ((ListRowPresenter.ViewHolder)rowViewHolder).getGridView().getSelectedPosition();
+            currentPlaying = ((ListRowPresenter.ViewHolder) rowViewHolder).getGridView().getSelectedPosition();
             Movie selected = (Movie) item;
             movieChangeLisener.onMovieChanged(selected);
 
@@ -86,7 +88,7 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Ro
         public void onItemSelected(Presenter.ViewHolder itemViewHolder, Object item,
                                    RowPresenter.ViewHolder rowViewHolder, Row row) {
             initChildView();
-            if (item instanceof  Movie) {
+            if (item instanceof Movie) {
                 Movie selected = (Movie) item;
                 currentSelected = ((ListRowPresenter.ViewHolder) rowViewHolder).getGridView().getSelectedPosition() + 1;
                 tvNum.setText("" + currentSelected + "/" + mItems.size());
@@ -94,6 +96,7 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Ro
             }
         }
     }
+
     @SuppressWarnings("deprecation")
     @Override
     public void onAttach(Activity context) {
@@ -102,11 +105,11 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Ro
     }
 
     public void endVideo() {
-       nextVideo();
+        nextVideo();
     }
 
     public void nextVideo() {
-        currentPlaying ++;
+        currentPlaying++;
         if (currentPlaying == mItems.size())
             currentPlaying = 0;
         Movie selected = mItems.get(currentPlaying);
@@ -114,9 +117,9 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Ro
     }
 
     public void preVideo() {
-        currentPlaying --;
+        currentPlaying--;
         if (currentPlaying < 0)
-            currentPlaying = mItems.size() -1;
+            currentPlaying = mItems.size() - 1;
         Movie selected = mItems.get(currentPlaying);
         movieChangeLisener.onMovieChanged(selected);
     }

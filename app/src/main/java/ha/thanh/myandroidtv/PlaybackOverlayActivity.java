@@ -19,8 +19,10 @@ import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v17.leanback.widget.ListRowPresenter;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -64,7 +66,9 @@ public class PlaybackOverlayActivity extends Activity implements MovieChangeList
     private FragmentManager f;
     private PlaybackOverlayFragment fragment;
     private TextView tvTitle;
-    private SimpleExoPlayerView simpleExoPlayerView;
+    private ImageView ivAction;
+    private CustomExoPlayerView simpleExoPlayerView;
+
     /**
      * Called when the activity is first created.
      */
@@ -79,6 +83,8 @@ public class PlaybackOverlayActivity extends Activity implements MovieChangeList
         queueBarLayout.requestFocus();
 
         tvTitle = findViewById(R.id.video_title_controller_bar);
+        ivAction = findViewById(R.id.image_action);
+        ivAction.setVisibility(View.GONE);
 
         shouldAutoPlay = true;
         bandwidthMeter = new DefaultBandwidthMeter();
@@ -103,7 +109,7 @@ public class PlaybackOverlayActivity extends Activity implements MovieChangeList
         player = ExoPlayerFactory.newSimpleInstance(this, trackSelector);
         simpleExoPlayerView.setPlayer(player);
 
-        if(movie !=null) {
+        if (movie != null) {
             if (movie.getVideoUrl().contains(".m3u8")) {
                 MediaSource mediaSource = new HlsMediaSource(Uri.parse(movie.getVideoUrl()),
                         mediaDataSourceFactory, null, null);
@@ -123,6 +129,7 @@ public class PlaybackOverlayActivity extends Activity implements MovieChangeList
     @Override
     public void onTimelineChanged(Timeline timeline, Object manifest) {
 
+        //Log.d("Play listener", timeline.toString() + "\nObject manifest:\n" + manifest.toString());
     }
 
     @Override
@@ -132,20 +139,31 @@ public class PlaybackOverlayActivity extends Activity implements MovieChangeList
 
     @Override
     public void onLoadingChanged(boolean isLoading) {
-
+//        if (isLoading) {
+//            showActionIcon(Utils.STATUS_LOADING);
+//        }
     }
 
     @Override
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-        switch(playbackState) {
+        switch (playbackState) {
 
-            case ExoPlayer.STATE_ENDED:
+            case Player.STATE_BUFFERING:
+                showActionIcon(Utils.STATUS_LOADING);
+                break;
+            case Player.STATE_ENDED:
+                showActionIcon(Utils.STATUS_NEXT);
                 fragment.endVideo();
                 break;
-
+            case Player.STATE_READY:
+                if (playWhenReady)
+                    showActionIcon(Utils.STATUS_PLAYING);
+                else
+                showActionIcon(Utils.STATUS_PAUSING);
             default:
                 break;
         }
+
     }
 
     @Override
@@ -156,6 +174,7 @@ public class PlaybackOverlayActivity extends Activity implements MovieChangeList
     @Override
     public void onPlayerError(ExoPlaybackException error) {
 
+        Log.d("Play listener", error.toString());
     }
 
     @Override
@@ -208,7 +227,7 @@ public class PlaybackOverlayActivity extends Activity implements MovieChangeList
         if ((Util.SDK_INT <= 23 || player == null)) {
             initializePlayer();
         }
-        queueBarLayout.requestFocus();
+        doKeyUpthing();
     }
 
     @Override
@@ -230,8 +249,7 @@ public class PlaybackOverlayActivity extends Activity implements MovieChangeList
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
 
-        switch (keyCode)
-        {
+        switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_UP: // key up
                 doKeyUpthing();
                 return true;
@@ -240,41 +258,75 @@ public class PlaybackOverlayActivity extends Activity implements MovieChangeList
                 return true;
             case 42:  // later will be the next video button
                 fragment.nextVideo();
+                showActionIcon(5);
                 return true;
 
             case 30:  // later will be the previous video button
                 fragment.preVideo();
+                showActionIcon(6);
                 return true;
             case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
                 if (player.getPlayWhenReady())
-                player.setPlayWhenReady(false);
+                    player.setPlayWhenReady(false);
                 player.setPlayWhenReady(true);
 
         }
         return super.onKeyUp(keyCode, event);
     }
 
-    private void showActionIcon (int statuscode) {
-        switch (statuscode) {
+    private void showActionIcon(int statusCode) {
+        switch (statusCode) {
+            case 0: // loading
+                ivAction.setImageResource(R.drawable.lb_ic_more);
+                ivAction.setVisibility(View.VISIBLE);
+                break;
             case 1: // playing
+                ivAction.setImageResource(R.drawable.lb_ic_play);
+                ivAction.setVisibility(View.VISIBLE);
+                break;
             case 2: // pausing
+                ivAction.setImageResource(R.drawable.ic_pause_playcontrol_normal);
+                ivAction.setVisibility(View.VISIBLE);
+                break;
             case 3: // fast forward
+                ivAction.setImageResource(R.drawable.lb_ic_fast_forward);
+                ivAction.setVisibility(View.VISIBLE);
+                break;
             case 4: // rewind
+                ivAction.setImageResource(R.drawable.lb_ic_fast_rewind);
+                ivAction.setVisibility(View.VISIBLE);
+                break;
             case 5: // next
+                ivAction.setImageResource(R.drawable.lb_ic_skip_next);
+                ivAction.setVisibility(View.VISIBLE);
+                break;
             case 6: // previous
+                ivAction.setImageResource(R.drawable.lb_ic_skip_previous);
+                ivAction.setVisibility(View.VISIBLE);
+                break;
+            default: break;
         }
+        hideIconAfterTimeOut();
+    }
+
+    private void hideIconAfterTimeOut() {
+
+        int timeOutMils = 5000;
+        ivAction.postDelayed(new Runnable() { public void run() { ivAction.setVisibility(View.GONE); } }, timeOutMils);
     }
     private void doKeyUpthing() {
         if (queueBarLayout.getVisibility() == LinearLayout.GONE) {
             queueBarLayout.setVisibility(LinearLayout.VISIBLE);
-            queueBarLayout.requestFocus();
         }
+        queueBarLayout.requestFocus();
         simpleExoPlayerView.hideController();
     }
-    private void doKeyDownThing () {
+
+    private void doKeyDownThing() {
         if (queueBarLayout.getVisibility() == LinearLayout.VISIBLE) {
             queueBarLayout.setVisibility(LinearLayout.GONE);
         }
         simpleExoPlayerView.showController();
+        ivAction.setVisibility(View.GONE);
     }
 }

@@ -486,18 +486,18 @@ public class CustomTimeBar extends View implements TimeBar {
     }
 
     private void drawTimeBar(Canvas canvas) {
+        int myCode = 10;
         int progressBarHeight = progressBar.height();
         int barTop = progressBar.centerY() - progressBarHeight / 2;
         int barBottom = barTop + progressBarHeight;
-        int bufferedLeft = bufferedBar.left - 10;
-        int bufferedRight = bufferedBar.right + 10;
-        int progressLeft = Math.max(Math.max(progressBar.left, bufferedRight), scrubberBar.right);
+        int bufferedLeft = bufferedBar.left - myCode;
+        int bufferedRight = bufferedBar.right + myCode;
         bufferedLeft = Math.max(bufferedLeft, scrubberBar.right);
         if (bufferedRight > bufferedLeft) {
-            canvas.drawRoundRect(bufferedLeft - 10, barTop, bufferedRight, barBottom,10, 10, bufferedPaint);
+            canvas.drawRoundRect(bufferedLeft - myCode, barTop, bufferedRight, barBottom, myCode, myCode, bufferedPaint);
         }
         if (scrubberBar.width() > 0) {
-            canvas.drawRoundRect(scrubberBar.left - 10, barTop, scrubberBar.right + 10, barBottom, 10, 10, playedPaint);
+            canvas.drawRoundRect(scrubberBar.left - myCode, barTop, scrubberBar.right + 10, barBottom, myCode, myCode, playedPaint);
         }
         int adMarkerOffset = adMarkerWidth / 2;
         for (int i = 0; i < adGroupCount; i++) {
@@ -507,7 +507,7 @@ public class CustomTimeBar extends View implements TimeBar {
             int markerLeft = progressBar.left + Math.min(progressBar.width() - adMarkerWidth,
                     Math.max(0, markerPositionOffset));
             Paint paint = playedAdGroups[i] ? playedAdMarkerPaint : adMarkerPaint;
-            canvas.drawRoundRect(markerLeft - 10, barTop, markerLeft + adMarkerWidth + 10, barBottom, 10 , 10, paint);
+            canvas.drawRoundRect(markerLeft - myCode, barTop, markerLeft + adMarkerWidth + myCode, barBottom, myCode, myCode, paint);
         }
     }
 

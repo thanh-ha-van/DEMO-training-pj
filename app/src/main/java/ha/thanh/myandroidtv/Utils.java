@@ -88,4 +88,12 @@ public class Utils {
         }
         return result;
     }
+
+    public static int STATUS_LOADING = 0;
+    public static int STATUS_PLAYING = 1;
+    public static int STATUS_PAUSING = 2;
+    public static int STATUS_NEXT = 3;
+    public static int STATUS_PREVIOUS = 4;
+    public static int STATUS_FFW = 5;
+    public static int STATUS_REWND = 6;
 }

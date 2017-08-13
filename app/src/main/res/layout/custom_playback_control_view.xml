@@ -39,18 +39,17 @@
         <ha.thanh.myandroidtv.CustomTimeBar
             android:id="@id/exo_progress"
             android:layout_width="0dp"
-            android:layout_height="16dp"
+            android:layout_height="12dp"
             android:layout_weight="1"
             android:background="@drawable/plate"
             app:ad_marker_color="#00ff00"
-            app:bar_height="14dp"
+            app:bar_height="10dp"
             app:buffered_color="#888888"
             app:played_color="@color/white"
             app:scrubber_color="@color/white"
-            app:scrubber_disabled_size="14dp"
-            app:scrubber_dragged_size="14dp"
-            app:scrubber_enabled_size="14dp"
-            />
+            app:scrubber_disabled_size="10dp"
+            app:scrubber_dragged_size="10dp"
+            app:scrubber_enabled_size="10dp" />
 
         <TextView
             android:id="@id/exo_duration"
