@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.ClassPresenterSelector;
+import android.support.v17.leanback.widget.ItemBridgeAdapter;
 import android.support.v17.leanback.widget.ListRow;
 import android.support.v17.leanback.widget.ListRowPresenter;
 import android.support.v17.leanback.widget.OnItemViewClickedListener;
@@ -13,6 +14,9 @@ import android.support.v17.leanback.widget.OnItemViewSelectedListener;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
+import android.support.v17.leanback.widget.VerticalGridView;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -97,12 +101,14 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Ro
         }
     }
 
+
     @SuppressWarnings("deprecation")
     @Override
     public void onAttach(Activity context) {
         super.onAttach(context);
 
     }
+
 
     public void endVideo() {
         nextVideo();
@@ -114,6 +120,9 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Ro
             currentPlaying = 0;
         Movie selected = mItems.get(currentPlaying);
         movieChangeLisener.onMovieChanged(selected);
+
+
+
     }
 
     public void preVideo() {

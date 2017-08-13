@@ -18,7 +18,9 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v17.leanback.widget.ItemBridgeAdapter;
 import android.support.v17.leanback.widget.ListRowPresenter;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -259,6 +261,7 @@ public class PlaybackOverlayActivity extends Activity implements MovieChangeList
             case 42:  // later will be the next video button
                 fragment.nextVideo();
                 showActionIcon(5);
+                fragment.setSelectedPosition(0, true, new ListRowPresenter.SelectItemViewHolderTask(fragment.currentPlaying));
                 return true;
 
             case 30:  // later will be the previous video button
