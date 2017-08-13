@@ -20,6 +20,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v17.leanback.widget.ItemBridgeAdapter;
 import android.support.v17.leanback.widget.ListRowPresenter;
+import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -167,6 +168,13 @@ public class PlaybackOverlayActivity extends Activity implements MovieChangeList
                 showActionIcon(Utils.STATUS_PAUSING);
             default:
                 break;
+        }
+
+        if (playbackState == PlaybackStateCompat.STATE_FAST_FORWARDING) {
+            showActionIcon(3);
+        }
+        if (playbackState == PlaybackStateCompat.STATE_REWINDING) {
+            showActionIcon(4);
         }
 
     }
