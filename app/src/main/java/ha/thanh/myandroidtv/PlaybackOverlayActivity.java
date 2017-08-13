@@ -45,6 +45,7 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.ui.SubtitleView;
 import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
@@ -103,6 +104,8 @@ public class PlaybackOverlayActivity extends Activity implements MovieChangeList
 
         simpleExoPlayerView = findViewById(R.id.player_view);
         simpleExoPlayerView.requestFocus();
+        SubtitleView subtitleView = simpleExoPlayerView.getSubtitleView();
+        subtitleView.setVisibility(View.GONE);
         simpleExoPlayerView.hideController();
 
         TrackSelection.Factory videoTrackSelectionFactory =
